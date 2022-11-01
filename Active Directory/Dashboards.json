@@ -1,0 +1,133 @@
+{
+  graphs: [
+    {
+      query: "logfile='GetADUser' Name = * | columns Endpoint , Enabled , Created , Name , SIDAccountDomainSidAccountDomainSid , PasswordLastSet , LastLogonDate , PasswordNeverExpires , DistinguishedName ",
+      title: "Domain Controller User Audit",
+      layout: {
+  h: 14,
+  w: 39,
+  x: 20,
+  y: 16
+},
+      graphStyle: "",
+      showBarsColumn: "false"
+    },
+    {
+      query: "logfile='NLTest' DomainName = * | columns ClientSiteName , DomainName , DNSForestName , DcSiteName , Description , DomainControllerAddress , DomainControllerName , Status ",
+      title: "Domain Information",
+      layout: {
+  h: 8,
+  w: 59,
+  x: 0,
+  y: 0
+}
+    },
+    {
+      query: "logfile='GetADUser' Name = * | group count(Enabled = false)",
+      title: "Disabled Users",
+      graphStyle: "number",
+      layout: {
+  h: 5,
+  w: 7,
+  x: 13,
+  y: 24
+},
+      options: {color: "orange"}
+    ,
+    },
+    {
+      query: "logfile='GetADUser' Name = * | group count(Enabled = true)",
+      title: "Enabled Users",
+      graphStyle: "number",
+      layout: {
+  h: 5,
+  w: 7,
+  x: 13,
+  y: 19
+},
+      options: {color: "green"}
+    },
+    {
+      query: "logfile='NLTest' DomainName = * | group count(DomainName)",
+      title: "Total Domains Analyzed",
+      graphStyle: "number",
+      layout: {
+  h: 5,
+  w: 20,
+  x: 0,
+  y: 9
+},
+      options: {color: "deepskyblue"}
+    },
+    {
+      query: "logfile='GetADUser' DistinguishedName contains 'admin' | group count()",
+      title: "Privileged Accounts",
+      graphStyle: "number",
+      layout: {
+  h: 5,
+  w: 7,
+  x: 13,
+  y: 14
+},
+      options: {color: "red"}
+    },
+    {
+      query: "serverHost='AD-DomainPasswordPolicy' | columns ComplexityEnabled , DistinguishedName , LockoutDurationMinutes  , MinPasswordAgeDays , MinPasswordLength , ReversibleEncryptionEnabled ",
+      title: "Password Policy",
+      layout: {
+  h: 8,
+  w: 32,
+  x: 27,
+  y: 8
+}
+    },
+    {
+      query: "logfile='GetADUser' Name = * | group count(PasswordNeverExpires = true)",
+      title: "User Passwords Set to Never Expire",
+      graphStyle: "number",
+      layout: {
+  h: 5,
+  w: 20,
+  x: 0,
+  y: 29
+},
+      options: {color: "blue"}
+    },
+    {
+      query: "logfile='GetADUser' Name = 'krbtgt'  | columns Endpoint , Name , PasswordLastSet | limit 1",
+      title: "Kerberos Password Last Set",
+      layout: {
+  h: 14,
+  w: 13,
+  x: 0,
+  y: 13
+},
+      graphStyle: "",
+      showBarsColumn: "false"
+    },
+    {
+      query: "serverHost='AD-DomainPasswordPolicy' | columns MinPasswordLength ",
+      title: "Minimum Password Length",
+      graphStyle: "number",
+      options: {color: "purple"},
+      layout: {
+  h: 8,
+  w: 7,
+  x: 20,
+  y: 8
+}
+    },
+    {
+      query: "logfile='GetADUser' Name = * | columns Endpoint , Enabled , Created , Name , SIDAccountDomainSidAccountDomainSid , PasswordLastSet , LastLogonDate , PasswordNeverExpires , DistinguishedName \n|filter Created > '2022-01-01 01:00:00'",
+      title: "Newest Created Users",
+      options: {color: "red"},
+      layout: {
+  h: 14,
+  w: 39,
+  x: 20,
+  y: 30
+}
+    }
+  ],
+  description: ""
+ }
